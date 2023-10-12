@@ -4,79 +4,72 @@ import "./AgeSubmission.css";
 
 export default function Output() {
   const location = useLocation();
-  let { ageDateTime } = location.state;
+  let { time: data } = location.state;
 
-  // const [ ms , setMs ] = useState(ageInMilliseconds)
-  // const [ seconds , setSeconds ] = useState(ageInSeconds)
-  // const [ minutes , setMinutes ]= useState(ageInMinutes)
-  // const [ hours , setHours ] = useState(ageInHours)
-  // const [ days , setDays ] = useState(ageInDays)
-  // const [ months , setMonths ] = useState(ageInMonths)
-  // const [ years , setYears ] = useState(ageInYears)
-
-  /*
-  useEffect(() => {
-
-    
-    let interval = setInterval( () => {
-      
-      //setMs( ms + 1000 )
-      //setSeconds ( seconds => seconds + 1)
-      // if ( ms >= 1000 )
-      // {
-      //   setMs( ms => 0 )
-      //   setSeconds( seconds => seconds + 1 )
-      // }
-
-      if ( seconds >= 60 )
-      {
-        setSeconds(0)
-        setMinutes( minutes => minutes + 1 )
-      }
-
-      if (minutes >= 60 )
-      {
-        setMinutes(0)
-        setHours(hours => hours + 1)
-      }
-      
-      if ( hours >= 24 )
-      {
-        setHours(0)
-        setDays(days => days + 1)
-      }
-      
-      if ( days >= 30 )
-      {
-        setDays(0)
-        setMonths(months => months + 1)
-      }
-      
-      if ( months >= 12 )
-      {
-        setMonths(0)
-        setYears(years => years + 1)
-      }
-
-        // Cleanup the interval on unmount
-        return () => clearInterval(interval)
-
-    } , 1000 )
-
-  } , [] )
-*/
+  const [time, setTime] = useState({ ...data, ms: 0 });
 
   useEffect(() => {
     let interval = setInterval(() => {
-      console.log(ageDateTime);
+      setTime((state) => {
+        let s = state.seconds,
+          ms = 1000,
+          minute = state.minutes,
+          hour = state.hour,
+          day = state.day,
+          year = state.year,
+          month = state.month;
+
+        if (state.ms >= 1000) {
+          ms = 0;
+          s++;
+          console.log("value of s : " + s);
+        }
+
+        if (s >= 60) {
+          s = 0;
+          minute++;
+        }
+
+        if (minute > 60) {
+          minute = 0;
+          hour++;
+        }
+
+        if (hour > 24) {
+          hour = 0;
+          day++;
+        }
+
+        if (day > 30) {
+          day = 0;
+          month++;
+        }
+
+        if (month > 12) {
+          month = 1;
+          year++;
+        }
+
+        return {
+          ms: ms,
+          seconds: s,
+          minutes: minute,
+          month,
+          hour,
+          day,
+          year,
+        };
+      });
     }, 1000);
   }, []);
 
-  console.log(location.state);
+  console.log(time);
 
   return (
     <div className="counter d-flex">
-      {/* {years} years {months} months {days} days {hours} hours {minutes} minutes {seconds} seconds {ms} milliseconds */}
+      {time.year} years {time.month} months {time.day} days {time.hour} hours{" "}
+      {time.minutes} minutes {time.seconds} seconds {time.ms} milliseconds
+      {/* {time.minutes} minutes {time.seconds} seconds {time.ms} milliseconds */}
     </div>
   );
 }
