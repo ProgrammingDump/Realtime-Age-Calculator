@@ -1,43 +1,96 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './AgeSubmission.css'
 
 const AgeSubmission = () => {
 
-  const [year, setYear] = useState()
-  const [month, setMonth] = useState()
-  const [date, setDate] = useState()
-  const [hour, setHour] = useState()
-  const [age, setAge] = useState()
+  const navigate = useNavigate();
+
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [date, setDate] = useState('');
+  const [hour, setHour] = useState('');
+  const [age, setAge] = useState('');
+  const [ageInHours, setAgeInHours] = useState(null);
+  const [ageInDays, setAgeInDays] = useState(null);
+  const [ageInMonths, setAgeInMonths] = useState(null);
+  const [ageInYears, setAgeInYears] = useState(null);
 
   const calculateAge = () => {
-    const today = new Date()
-    const birthYear = new Date(year)
-    const birthMonth = new Date(month)
-    const birthDate = new Date(date)
-    const birthHour = new Date(hour)
+    const birthYear = parseInt(year);
+    const birthMonth = parseInt(month);
+    const birthDate = parseInt(date);
+    const birthHour = parseInt(hour);
 
-    let age = today.getFullYear() - birthYear.getFullYear()
-    const monthDiff = today.getMonth() - birthMonth.getMonth()
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+    if (
+      isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDate) || isNaN(birthHour) ||
+      birthYear < 1900 || birthYear > new Date().getFullYear() ||
+      birthMonth < 0 || birthMonth > 11 ||
+      birthDate < 1 || birthDate > 31 ||
+      birthHour < 0 || birthHour > 23
+    ) {
+      console.log("Invalid input. Please enter valid values for year, month, date, and hour.");
+      return;
     }
 
-    setAge(age);
-    console.log(age)
+    const birthDateObject = new Date(birthYear, birthMonth, birthDate, birthHour);
+    const today = new Date();
+
+    console.log("Birth Date:", birthDateObject);
+    console.log("Current Date:", today);
+
+    const ageInMilliseconds = today - birthDateObject;
+
+
+    setAge(ageInMilliseconds)
+
+    const ageInSeconds = ageInMilliseconds / 1000
+    const ageInMinutes = ageInSeconds / 60
+    const ageInHours = ageInMinutes / 60
+    const ageInDays = ageInHours / 24
+    const ageInMonths = ageInDays / 30.44
+    const ageInYears = ageInMonths / 12
+
+    var millisecondsRemainder = ageInMilliseconds % 1000
+    var hoursRemainder = ageInHours % 24
+    var secondsRemainder = ageInSeconds % 1000
+    var minutesRemainder = ageInMinutes % 60
+    var hoursRemainder = ageInHours % 60
+    var daysRemainder = ageInDays % 30.44
+    var monthsRemainder = ageInMonths % 12
+    var yearsRemainder = parseInt(ageInYears)
+
+    const formattedAgeInMilliseconds = parseInt(millisecondsRemainder)
+    const formattedAgeInSeconds = parseInt(secondsRemainder)
+    const formattedAgeInMinutes = parseInt(minutesRemainder)
+    const formattedAgeInHours = parseInt(hoursRemainder)
+    const formattedAgeInDays = parseInt(daysRemainder)
+    const formattedAgeInMonths = parseInt(monthsRemainder)
+    const formattedAgeInYears = parseInt(yearsRemainder)
+
+    setAgeInHours(formattedAgeInHours)
+    setAgeInDays(formattedAgeInDays)
+    setAgeInMonths(formattedAgeInMonths)
+    setAgeInYears(formattedAgeInYears)
+
+    navigate('/output', { state: { ageInMilliseconds: formattedAgeInMilliseconds, ageInSeconds: formattedAgeInSeconds, ageInMinutes: formattedAgeInMinutes, ageInHours: formattedAgeInHours, ageInDays: formattedAgeInDays, ageInMonths: formattedAgeInMonths, ageInYears: formattedAgeInYears } })
+
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
   }
 
   return (
     <div>
       <section className='main container d-flex'>
-        <div className='submission-form'>
-          <form>
+        <div className='submission-form d-flex'>
+          <form onSubmit={handleSubmit}>
             <div className='input-field'>
-              <input type='number' name='year' placeholder='YEAR' value={year} required />
-              <input type='number' name='month' placeholder='MONTH' value={month} required />
-              <input type='number' name='date' placeholder='DATE' value={date} required />
-              <input type='number' name='hour' placeholder='HOUR' value={hour} required />
+              <input type='number' name='year' placeholder='YEAR' inputMode='numeric' onChange={(e) => setYear(e.target.value)} required />
+              <input type='number' name='month' placeholder='MONTH' value={month} onChange={(e) => setMonth(e.target.value)} required />
+              <input type='number' name='date' placeholder='DATE' value={date} onChange={(e) => setDate(e.target.value)} required />
+              <input type='number' name='hour' placeholder='HOUR' value={hour} onChange={(e) => setHour(e.target.value)} required />
             </div>
             <div className='submission-button col-1 mx-auto'>
               <button className='btn btn-secondary' type='submit' name='submit' onClick={calculateAge}>SUBMIT</button>
