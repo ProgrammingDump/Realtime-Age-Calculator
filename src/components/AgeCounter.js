@@ -1,28 +1,27 @@
-import React , { useState , useEffect} from 'react'
-import { useLocation } from 'react-router-dom'
-import './AgeSubmission.css'
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import "./AgeSubmission.css";
 
 export default function Output() {
+  const location = useLocation();
+  let { ageDateTime } = location.state;
 
-  const location = useLocation()
-  let { ageInMilliseconds , ageInSeconds , ageInMinutes , ageInHours , ageInDays , ageInMonths , ageInYears } = location.state
+  // const [ ms , setMs ] = useState(ageInMilliseconds)
+  // const [ seconds , setSeconds ] = useState(ageInSeconds)
+  // const [ minutes , setMinutes ]= useState(ageInMinutes)
+  // const [ hours , setHours ] = useState(ageInHours)
+  // const [ days , setDays ] = useState(ageInDays)
+  // const [ months , setMonths ] = useState(ageInMonths)
+  // const [ years , setYears ] = useState(ageInYears)
 
-  const [ ms , setMs ] = useState(ageInMilliseconds)
-  const [ seconds , setSeconds ] = useState(ageInSeconds)
-  const [ minutes , setMinutes ]= useState(ageInMinutes)
-  const [ hours , setHours ] = useState(ageInHours)
-  const [ days , setDays ] = useState(ageInDays)
-  const [ months , setMonths ] = useState(ageInMonths)
-  const [ years , setYears ] = useState(ageInYears)
-
-
+  /*
   useEffect(() => {
 
     
     let interval = setInterval( () => {
       
       //setMs( ms + 1000 )
-      setSeconds ( seconds => seconds + 1)
+      //setSeconds ( seconds => seconds + 1)
       // if ( ms >= 1000 )
       // {
       //   setMs( ms => 0 )
@@ -65,12 +64,19 @@ export default function Output() {
     } , 1000 )
 
   } , [] )
+*/
 
-  console.log(location.state)
+  useEffect(() => {
+    let interval = setInterval(() => {
+      console.log(ageDateTime);
+    }, 1000);
+  }, []);
+
+  console.log(location.state);
 
   return (
-    <div className='counter d-flex'>
-      {years} years {months} months {days} days {hours} hours {minutes} minutes {seconds} seconds {ms} milliseconds
+    <div className="counter d-flex">
+      {/* {years} years {months} months {days} days {hours} hours {minutes} minutes {seconds} seconds {ms} milliseconds */}
     </div>
-  )
+  );
 }
