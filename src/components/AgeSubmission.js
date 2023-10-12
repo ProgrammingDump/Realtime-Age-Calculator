@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import "./AgeSubmission.css";
+import React, { useState } from "react"
+import moment from "moment"
+import { useNavigate } from "react-router-dom"
+import "./AgeSubmission.css"
 
 const AgeSubmission = () => {
   const navigate = useNavigate();
 
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [hour, setHour] = useState("");
+  const [year, setYear] = useState("")
+  const [month, setMonth] = useState("")
+  const [day, setDay] = useState("")
+  const [hour, setHour] = useState("")
   // const [age, setAge] = useState('')
   // const [ageInHours, setAgeInHours] = useState(null)
   // const [ageInDays, setAgeInDays] = useState(null)
@@ -69,16 +69,16 @@ const AgeSubmission = () => {
     //   setAgeInYears(formattedAgeInYears)
 
     //   console.log(ageInHours, ageInDays, ageInMonths)
-    const ageDateTime = moment(`${year}-${month}-${day} ${hour}`)
+    const ageDateTime = moment(new Date(`${year}-${month}-${day} ${hour}:0:0`))
     console.log(ageDateTime)
     navigate("/output", {
-      state: { ageDateTime: moment(`${year}-${month}-${day} ${hour}`) },
-    });
-  };
+      state: { ageDateTime: moment( new Date(`${year}-${month}-${day} ${hour}:0:0`)) },
+    })
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
 
   return (
     <div>
@@ -133,7 +133,7 @@ const AgeSubmission = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default AgeSubmission;
+export default AgeSubmission
