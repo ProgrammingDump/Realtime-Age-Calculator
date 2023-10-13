@@ -4,11 +4,15 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    max-width: 100%
 }
 
 input {
     border: none;
+    text-align: center;
+    width: 150px;
     font-size: 30px !important;
+    text-align: center !important;
 
     &:hover {
         outline: none !important;
@@ -44,4 +48,11 @@ input[type=number] {
     align-items: center;
     height: 100vh;
     font-size: 70px;
+}
+
+@media (max-width: 767px) {
+    .input-field {
+        display: flex;
+        flex-direction: columns;
+    }
 }

@@ -22,7 +22,7 @@ export default function Output() {
           ms++
 
 
-        if (state.ms >= 1000) {
+        if (state.ms >= 999) {
           ms = 0;
           s++;
           console.log("value of s : " + s);

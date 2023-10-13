@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./AgeSubmission.css";
 
 const AgeSubmission = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log("navigate:" + navigate)
+  console.log("location:" + location)
 
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -25,6 +29,22 @@ const AgeSubmission = () => {
     });
   };
 
+  const [darkMode, setDarkMode] = useState(false);
+
+  const darkModeClass = darkMode ? "dark-mode" : "";
+
+  useEffect(() => {
+    const darkModeState = window.localStorage.getItem('Dark Mode');
+    if (darkModeState !== null) setDarkMode(JSON.parse(darkModeState));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("DarkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((state) => !state);
+  };
 
   const calculateAge = () => {
     const birthYear = parseInt(year);
@@ -86,7 +106,6 @@ const AgeSubmission = () => {
     const formattedAgeInMonths = parseInt(monthsRemainder);
     const formattedAgeInYears = parseInt(yearsRemainder);
 
-    //const ageDateTime = moment(`${year}-${month}-${day} ${hour}`)
     navigate("/output", {
       state: {
         time: {
@@ -106,6 +125,11 @@ const AgeSubmission = () => {
     event.preventDefault();
   };
 
+  const inputStyle = {
+    backgroundColor: darkMode ? '#333' : '#fff',
+    color: darkMode ? '#fff' : '#000',
+  };
+
   return (
     <div>
       <section className="main container d-flex">
@@ -113,6 +137,7 @@ const AgeSubmission = () => {
           <form onSubmit={handleSubmit}>
             <div className="input-field">
               <input
+                className= {`${darkModeClass} `}
                 type="number"
                 name="year"
                 placeholder="YEAR"
@@ -172,6 +197,6 @@ const AgeSubmission = () => {
       />
     </div>
   );
-};
+}
 
-export default AgeSubmission;
+export default AgeSubmission
