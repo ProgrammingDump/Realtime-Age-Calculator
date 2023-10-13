@@ -113,18 +113,10 @@ const AgeSubmission = () => {
             <div className="input-field">
               <input
                 type="number"
-                name="year"
-                placeholder="YEAR"
-                inputMode="numeric"
-                onChange={(e) => setYear(e.target.value)}
-                required
-              />
-              <input
-                type="number"
-                name="month"
-                placeholder="MONTH"
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
+                name="hour"
+                placeholder="HOUR"
+                value={hour}
+                onChange={(e) => setHour(e.target.value)}
                 required
               />
               <input
@@ -137,10 +129,18 @@ const AgeSubmission = () => {
               />
               <input
                 type="number"
-                name="hour"
-                placeholder="HOUR"
-                value={hour}
-                onChange={(e) => setHour(e.target.value)}
+                name="month"
+                placeholder="MONTH"
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                required
+              />
+              <input
+                type="number"
+                name="year"
+                placeholder="YEAR"
+                inputMode="numeric"
+                onChange={(e) => setYear(e.target.value)}
                 required
               />
             </div>
