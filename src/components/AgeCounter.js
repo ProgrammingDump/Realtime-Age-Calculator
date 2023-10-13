@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "./AgeSubmission.css";
+import "../App.css";
+import "./Style.css";
 
 export default function Output() {
   const location = useLocation();
@@ -12,20 +13,18 @@ export default function Output() {
     let interval = setInterval(() => {
       setTime((state) => {
         let s = state.seconds,
-          ms = state.ms ,
+          ms = state.ms,
           minute = state.minutes,
           hour = state.hour,
           day = state.day,
           year = state.year,
           month = state.month;
 
-          ms++
-
+        ms++;
 
         if (state.ms >= 999) {
           ms = 0;
           s++;
-          console.log("value of s : " + s);
         }
 
         if (s >= 60) {
@@ -66,15 +65,16 @@ export default function Output() {
     }, 1);
   }, []);
 
-  console.log(time);
-
   return (
     <div className="counter d-flex">
       <span>
-      {time.year}.{time.month}{time.day}{time.hour}
-      {time.minutes}{time.seconds}
+        {time.year}.{time.month}
+        {time.day}
+        {time.hour}
+        {time.minutes}
+        {time.seconds}
       </span>
-      <span style={{'minWidth':'150px'}}>{time.ms}</span> 
+      <span style={{ minWidth: "150px" }}>{time.ms}</span>
     </div>
   );
 }

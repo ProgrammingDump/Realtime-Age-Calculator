@@ -12,21 +12,22 @@ function App() {
 
   const darkModeClass = darkMode ? "dark-mode" : "";
 
-  useEffect(() => {
-    const darkModeState = window.localStorage.getItem('Dark Mode');
-    if (darkModeState !== null) setDarkMode(JSON.parse(darkModeState));
-  }, []);
 
   useEffect(() => {
-    localStorage.setItem("DarkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
+    const darkModeState = window.localStorage.getItem('Dark Mode');
+    setDarkMode(JSON.parse(darkModeState));
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode((state) => !state);
   };
 
+  useEffect(() => {
+    localStorage.setItem("DarkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
   return (
-    <div className={`App ${darkModeClass} `}>
+    <div className={` App ${darkModeClass} `}>
       <button
         className="dark-mode-button"
         onClick={toggleDarkMode}
