@@ -9,6 +9,27 @@
 input {
     border: none;
     font-size: 30px !important;
+
+    &:hover {
+        outline: none !important;
+        border-width: 0px !important;
+        border: none !important;
+    }
+
+    &:focus {
+        outline: none !important;
+        border-width: 0px !important;
+        border: none !important;
+    }
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .submission-button {
@@ -17,11 +38,10 @@ input {
 }
 
 .counter {
+    text-transform: uppercase;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-transform: capitalize;
     height: 100vh;
-    font-size: 40px;
+    font-size: 70px;
 }
-

@@ -25,6 +25,7 @@ const AgeSubmission = () => {
     });
   };
 
+
   const calculateAge = () => {
     const birthYear = parseInt(year);
     const birthMonth = parseInt(month);

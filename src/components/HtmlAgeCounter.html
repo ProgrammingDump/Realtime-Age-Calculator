@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Age Counter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Bebas Neue', sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #dobInput {
+            display: block;
+        }
+
+        #ageDisplay {
+            display: none;
+        }
+
+        #age {
+            font-size: 8em; /* Adjust the size as needed */
+        }
+
+        .time-unit {
+            font-size: 76pt; /* Make the font bigger */
+            display: inline;
+            padding: 0 20px; /* Add spacing */
+        }
+
+        .time-unit:not(:last-child) {
+            border-right: 1px solid #8F8F8F;
+        }
+
+        /* Add top and bottom padding and set font-size for milliseconds */
+        .time-unit#millisecondsPlaceholder {
+            font-size: 76pt;
+            padding: 10px 10 px; /* Add top and bottom padding */
+        }
+
+        #social-icons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .fa {
+            display: inline-block;
+            background: transparent; /* Remove blue background */
+            color: #0073e6; /* Set the icon color */
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 24px;
+            margin: 0 5px;
+            transition: color 0.3s; /* Change the color on hover */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .fa:hover {
+            color: #005db3; /* Change color on hover */
+        }
+    </style>
+</head>
+<body>
+    <form id="dobForm" onsubmit="calculateAge(); return false;">
+        <div id="dobInput">
+            <input type="date" id="dob" required>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <div id="ageDisplay">
+        <p class="time-unit" id="yearsPlaceholder">0</p>
+        <p class="time-unit" id="monthsPlaceholder">0</p>
+        <p class="time-unit" id="daysPlaceholder">0</p>
+        <p class="time-unit" id="hoursPlaceholder">0</p>
+        <p class="time-unit" id="minutesPlaceholder">0</p>
+        <p class="time-unit" id="secondsPlaceholder">00</p>
+        <p class="time-unit" id="millisecondsPlaceholder">000</p>
+    </div>
+    
+    <div id="social-icons">
+        <a href="#" target="_blank" class="fa fa-facebook"></a>
+        <a href="#" target="_blank" class="fa fa-twitter"></a>
+        <a href="#" target="_blank" class="fa fa-linkedin"></a>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const dobInput = document.getElementById('dobInput');
+            const ageDisplay = document.getElementById('ageDisplay');
+            const dob = new Date(document.getElementById('dob').value);
+            const yearsDisplay = document.getElementById('yearsPlaceholder');
+            const monthsDisplay = document.getElementById('monthsPlaceholder');
+            const daysDisplay = document.getElementById('daysPlaceholder');
+            const hoursDisplay = document.getElementById('hoursPlaceholder');
+            const minutesDisplay = document.getElementById('minutesPlaceholder');
+            const secondsDisplay = document.getElementById('secondsPlaceholder');
+            const millisecondsDisplay = document.getElementById('millisecondsPlaceholder');
+
+            const updateAge = () => {
+                const currentDate = new Date();
+                const ageInMilliseconds = currentDate - dob;
+                const ageInSeconds = ageInMilliseconds / 1000;
+
+                const years = Math.floor(ageInSeconds / (60 * 60 * 24 * 365.25));
+                const months = Math.floor((ageInSeconds % (60 * 60 * 24 * 365.25)) / (60 * 60 * 24 * 30));
+                const days = Math.floor((ageInSeconds % (60 * 60 * 24 * 30)) / (60 * 60 * 24));
+                const hours = Math.floor((ageInSeconds % (60 * 60 * 24)) / (60 * 60));
+                const minutes = Math.floor((ageInSeconds % (60 * 60)) / 60);
+                const seconds = String(Math.floor(ageInSeconds % 60)).padStart(2, '0');
+                const milliseconds = String(ageInMilliseconds % 1000).padStart(3, '0');
+
+                yearsDisplay.innerText = `${years} `;
+                monthsDisplay.innerText = `${months} `;
+                daysDisplay.innerText = `${days} `;
+                hoursDisplay.innerText = `${hours} `;
+                minutesDisplay.innerText = `${minutes} `;
+                secondsDisplay.innerText = seconds;
+                millisecondsDisplay.innerText = milliseconds;
+            };
+
+            // Hide the input field and show the age display
+            dobInput.style.display = 'none';
+            ageDisplay.style.display = 'block';
+
+            // Initial calculation
+            updateAge();
+
+            // Update age every millisecond (for the "live" effect)
+            setInterval(updateAge, 1);
+        }
+    </script>
+</body>
+</html>

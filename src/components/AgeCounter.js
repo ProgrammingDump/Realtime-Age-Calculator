@@ -12,12 +12,15 @@ export default function Output() {
     let interval = setInterval(() => {
       setTime((state) => {
         let s = state.seconds,
-          ms = 1000,
+          ms = state.ms ,
           minute = state.minutes,
           hour = state.hour,
           day = state.day,
           year = state.year,
           month = state.month;
+
+          ms++
+
 
         if (state.ms >= 1000) {
           ms = 0;
@@ -60,16 +63,18 @@ export default function Output() {
           year,
         };
       });
-    }, 1000);
+    }, 1);
   }, []);
 
   console.log(time);
 
   return (
     <div className="counter d-flex">
-      {time.year} years {time.month} months {time.day} days {time.hour} hours{" "}
-      {time.minutes} minutes {time.seconds} seconds {time.ms} milliseconds
-      {/* {time.minutes} minutes {time.seconds} seconds {time.ms} milliseconds */}
+      <span>
+      {time.year}.{time.month}{time.day}{time.hour}
+      {time.minutes}{time.seconds}
+      </span>
+      <span style={{'minWidth':'150px'}}>{time.ms}</span> 
     </div>
   );
 }
