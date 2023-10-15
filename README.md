@@ -29,7 +29,7 @@ Before you start, ensure you have the following software installed on your compu
 ## Clone the repository to your local machine using Git:
 bash
 Copy code
-git clone https://github.com/yourusername/real-time-age-calculator-react.git
+git clone https://github.com/programmpingdump/real-time-age-calculator-react.git
 
 ## Change to the project directory:
 bash
