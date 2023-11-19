@@ -55,11 +55,14 @@ const AgeSubmission = () => {
 
     const birthDateObject = new Date(
       birthYear,
-      birthMonth,
+      birthMonth - 1,
       birthDate,
       birthHour
     );
+
     const today = new Date();
+
+    console.log(today);
 
     const ageInMilliseconds = today - birthDateObject;
 
