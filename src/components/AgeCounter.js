@@ -63,6 +63,8 @@ export default function Output() {
         };
       });
     }, 1);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
